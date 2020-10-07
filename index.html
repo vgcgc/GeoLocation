@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geolocation22_2.html</title>
+</head>
+<body>
+    <fieldset>
+        <legend>Geolocation API-현재 위치의 위도와 경도 얻기</legend>
+        <button onclick=start() style="color:red;">위치추적 시작</button>
+        <button onclick=stop() style="color:red;">위치추적 정지</button>
+        <span id= "display" style="color:red;font-size:1.5em;font-weight:bold"></span>
+    </fieldset>
+    <script>
+        console.log(window.navigator.geolocation);
+        //dom객체 얻기
+        var span = document.getElementById('display');
+        function start() {
+            if(navigator.geolocation){
+            span.innerHTML = 'Geolaction API를 지원하는 브라우저';
+            var options = {timeout:3000, maxinumAge:5000};
+            //현재 위치 딱 한 번에 얻기
+            var watcher = navigator.geolocation.watchPosition(successCallback,errorCallback,options);
+            console.log(watcher);
+            }
+        }
+
+        var stop = function(){
+            navigator.geolocation.clearWatch(watcher);
+        };
+       
+        var errorCallback = function (error) {
+            switch(error.code){
+                case 1: span.innerHTML = '허용이 거부됨';break;
+                case 2: span.innerHTML = '위치 확인 불가';break;
+                case 3: span.innerHTML = '시간 초과';break;
+                default:span.innerHTML = error.massage;
+            }
+        }
+    </script>
+</body>
+</html>
