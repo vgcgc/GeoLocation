@@ -20,11 +20,38 @@
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=87cea6cb06a6b37a0d81e391e72c6c81"></script>
     <script>
         //샘플코드
+        /*
         var mapContainer = document.getElementById('map'); // 지도를 표시할 div 
         var mapOption = { 
             center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
             level: 3 // 지도의 확대 레벨
         };
+
+        var map = new kakao.maps.Map(mapContainer, mapOption); */
+        var map;
+        if(navigator.geolocation){
+            var options = {timeout:3000, maxinumAge:5000};
+            //현재 위치 딱 한 번에 얻기
+            navigator.geolocation.getCurrentPosition(successCallback);
+        }
+
+        function successCallback(position){
+            //위도/경도 얻기
+            var lat = position.coords.latitude;
+            var lng = position.coords.longitude;
+            //div에 지도 표시하기
+            displayKaKaoMap(lat,lng);
+        }
+        function displayKaKaoMap(lat,lng){
+            var mapContainer = document.getElementById('map'); // 지도를 표시할 div 
+            var mapOption = { 
+                center: new kakao.maps.LatLng(lat, lng), // 지도의 중심좌표
+                level: 3 // 지도의 확대 레벨
+            };
+
+        map = new kakao.maps.Map(Container, Option);
+        };
     </script>
+    
 </body>
 </html>
